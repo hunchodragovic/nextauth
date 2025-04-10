@@ -5,17 +5,20 @@ import type { NextRequest } from "next/server";
 
 export default withAuth(
   async function middleware(request: NextRequest) {
-    const pathname = request.nextUrl.pathname.startsWith("/profile");
+    const pathname = request.nextUrl.pathname;
     const isAuth = await getToken({
       req: request,
     });
     const protectedRoutes = ["/profile"];
-    const isAuthRoute = request.nextUrl.pathname.startsWith("/auth/signin");
+    const isAuthRoute = pathname.startsWith("/auth");
     const isProtectedRoute = protectedRoutes.some((route) =>
       request.nextUrl.pathname.startsWith(route)
     );
     if (isProtectedRoute && !isAuth) {
       return NextResponse.redirect(new URL("/auth/signin", request.url));
+    }
+    if (isAuthRoute && isAuth) {
+      return NextResponse.redirect(new URL("/profile", request.url));
     }
   },
   {
@@ -26,7 +29,7 @@ export default withAuth(
     },
   }
 );
-// This function can be marked `async` if using `await` inside
+// This function can be marked async if using await inside
 
 // See "Matching Paths" below to learn more
 export const config = {
