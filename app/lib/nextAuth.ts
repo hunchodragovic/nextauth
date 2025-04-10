@@ -14,4 +14,9 @@ export const authOptions: AuthOptions = {
   jwt: {},
   callbacks: {},
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/auth/signin",
+    signOut: "/auth/signout",
+    error: "/auth/error", // Error code passed in query string as ?error=
+  },
 };

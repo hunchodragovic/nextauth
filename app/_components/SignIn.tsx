@@ -7,7 +7,7 @@ const SignIn = () => {
     <div>
       <button
         type="button"
-        onClick={() => signIn("google")}
+        onClick={() => signIn("google", { redirect: true, callbackUrl: "/" })}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
       >
         Sign in with Google
